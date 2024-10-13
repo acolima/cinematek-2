@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ImageListItem, ImageListItemBar } from "@mui/material";
 
-import { Header, Loader } from "../../components";
+import { Header, Loader, Sidebar } from "../../components";
 
 import { tmdbApi } from "../../services";
 import { TMDBMoviesResult } from "../../utils/models";
@@ -34,9 +34,10 @@ function MainPage() {
 
 	return (
 		<Page>
-			<Header page="main" />
+			{/* <Header page="main" /> */}
+			<Sidebar />
 
-			{!movies && <Loader />}
+			{/* {!movies && <Loader />}
 
 			{movies && (
 				<TrendingMovies cols={columns}>
@@ -57,7 +58,7 @@ function MainPage() {
 						</ImageListItem>
 					))}
 				</TrendingMovies>
-			)}
+			)} */}
 		</Page>
 	);
 }

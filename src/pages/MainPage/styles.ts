@@ -3,7 +3,7 @@ import { Box, ImageList, Typography } from "@mui/material";
 
 const Page = styled(Box)({
 	width: "90%",
-	margin: "0 auto",
+	//margin: "0 auto",
 	display: "flex",
 	flexDirection: "column",
 	alignItems: "center",
