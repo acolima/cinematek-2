@@ -8,10 +8,14 @@ import { Loader } from "../../components";
 
 import { tmdbApi } from "../../services";
 import { errorAlert } from "../../utils/toastifyAlerts";
-import { IProviders, TMDBMovieResult } from "../../utils/models";
+import {
+	IProviders,
+	TMDBImagesResult,
+	TMDBMovieResult
+} from "../../utils/models";
 import {
 	ArrowBackButton,
-	BackdropDesktop,
+	Backdrops,
 	Genres,
 	MovieInfo,
 	Overview,
@@ -30,8 +34,8 @@ dayjs.extend(duration);
 
 function Movie() {
 	const [movie, setMovie] = useState<TMDBMovieResult | null>(null);
-
 	const [providers, setProviders] = useState<IProviders[]>([]);
+	const [images, setImages] = useState<TMDBImagesResult | null>(null);
 
 	const { id } = useParams();
 
@@ -39,6 +43,8 @@ function Movie() {
 
 	let mobile = true;
 	let posterWidth = 150;
+
+	const backdrops = images?.backdrops;
 
 	useEffect(() => {
 		getMovie();
@@ -51,9 +57,11 @@ function Movie() {
 			const { data: movieProviders } = await tmdbApi.getMovieProviders(
 				Number(id)
 			);
+			const { data: movieImages } = await tmdbApi.getMovieImages(Number(id));
 
 			setMovie(movieData);
 			setProviders(movieProviders.results.BR?.flatrate);
+			setImages(movieImages);
 			formatRuntime(movieData.runtime);
 		} catch (error) {
 			console.log(error);
@@ -87,12 +95,6 @@ function Movie() {
 					<Box sx={styles.noBackdrop}></Box>
 				))}
 
-			{!mobile && (
-				<BackdropDesktop
-					backdropUrl={`https://image.tmdb.org/t/p/w400${movie?.backdrop_path}`}
-				></BackdropDesktop>
-			)}
-
 			<Poster>
 				<img
 					src={`https://image.tmdb.org/t/p/w400${movie?.poster_path}`}
@@ -107,13 +109,25 @@ function Movie() {
 				</ArrowBackButton>
 
 				<MovieInfo>
-					<Title>{movie.title}</Title>
+					<Title>
+						{movie.title}
+						<Genres>
+							{movie.genres.map((genre) => (
+								<Chip
+									size="small"
+									label={genre.name}
+									color="primary"
+									key={genre.id}
+								/>
+							))}
+						</Genres>
+					</Title>
 
-					<Genres>
-						{movie.genres.map((genre) => (
-							<Chip label={genre.name} color="primary" key={genre.id} />
-						))}
-					</Genres>
+					<Runtime>Duration: {formatRuntime(movie.runtime)}</Runtime>
+
+					<ReleaseDate>
+						Release date: {dayjs(movie.release_date).format("DD/MM/YYYY")}
+					</ReleaseDate>
 
 					<Providers>
 						{providers?.map((p) => (
@@ -127,11 +141,17 @@ function Movie() {
 
 					<Overview>{movie.overview}</Overview>
 
-					<Runtime>Duration: {formatRuntime(movie.runtime)}</Runtime>
-
-					<ReleaseDate>
-						Release date: {dayjs(movie.release_date).format("DD/MM/YYYY")}
-					</ReleaseDate>
+					<Backdrops>
+						{backdrops?.map((image) => (
+							<>
+								<img
+									src={`https://image.tmdb.org/t/p/w400${image?.file_path}`}
+									alt={movie.title}
+									width={posterWidth}
+								/>
+							</>
+						))}
+					</Backdrops>
 				</MovieInfo>
 			</>
 		</Page>

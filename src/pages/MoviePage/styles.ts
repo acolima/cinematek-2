@@ -1,10 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
 
-interface Props {
-	backdropUrl?: string;
-}
-
 export const styles = {
 	backdrop: {
 		opacity: "0.6",
@@ -23,15 +19,12 @@ export const styles = {
 };
 
 const Page = styled(Box)({
-	position: "relative",
 	display: "flex",
-	flexDirection: "row",
 	alignItems: "center",
-	width: "70%",
+	width: "100%",
 	height: "100vh",
 	boxSizing: "border-box",
 	margin: "0 auto",
-	zIndex: 1,
 	"@media (max-width: 600px)": {
 		margin: "0",
 		width: "100%",
@@ -39,7 +32,7 @@ const Page = styled(Box)({
 		flexDirection: "column"
 	},
 	"@media (max-width: 900px)": {
-		width: "100%"
+		width: "90%"
 	}
 });
 
@@ -66,9 +59,11 @@ const ArrowBackButton = styled(Button)({
 const MovieInfo = styled(Box)({
 	margin: "10px",
 	padding: "10px",
-	display: "flex",
-	flexDirection: "column",
-	gap: "20px",
+	height: "450px",
+	display: "grid",
+	gridTemplateColumns: "1fr 1fr",
+	rowGap: "20px",
+	alignContent: "flex-start",
 	background: "rgb(0, 0, 0, 0.5)",
 	"@media (max-width: 600px)": {
 		background: "none",
@@ -77,13 +72,17 @@ const MovieInfo = styled(Box)({
 	}
 });
 
-const Title = styled(Typography)({
+const Title = styled(Box)({
+	marginTop: "10px",
+	gridColumn: "1 / -1",
 	fontFamily: "Poppins",
 	fontSize: "32px",
 	fontWeight: "500",
 	textTransform: "uppercase",
-	textAlign: "center",
 	boxSizing: "border-box",
+	display: "flex",
+	gap: "20px",
+	alignItems: "center",
 	"@media (max-width: 600px)": {
 		fontSize: "16px"
 	}
@@ -91,17 +90,15 @@ const Title = styled(Typography)({
 
 const Genres = styled(Box)({
 	display: "flex",
-	justifyContent: "space-evenly",
-	flexWrap: "wrap"
+	gap: "20px"
 });
 
 const Providers = styled(Box)({
-	width: "90%",
-	margin: "0 auto",
 	display: "flex",
-	gap: "10px",
-	justifyContent: "space-evenly",
-	flexWrap: "wrap"
+	gap: "15px",
+	flexWrap: "wrap",
+	position: "absolute",
+	right: 30
 });
 
 const Overview = styled(Typography)({
@@ -109,53 +106,44 @@ const Overview = styled(Typography)({
 	textAlign: "justify",
 	fontFamily: "Poppins",
 	fontSize: "16px",
-	boxSizing: "border-box",
-	margin: "0 auto"
+	boxSizing: "border-box"
 });
 
 const Runtime = styled(Typography)({
 	width: "85%",
 	fontFamily: "Poppins",
-	fontSize: "12px",
-	margin: "0 auto"
+	fontSize: "12px"
 });
 
 const ReleaseDate = styled(Typography)({
 	width: "85%",
 	fontFamily: "Poppins",
-	fontSize: "12px",
-	margin: "0 auto"
+	fontSize: "12px"
 });
 
-const FavoriteButton = styled(Box)({
-	"@media (max-width: 600px)": {
-		position: "absolute",
-		top: "10px",
-		right: "10px"
+const Backdrops = styled(Box)({
+	gridColumn: "1 / -1",
+	height: "200px",
+	display: "flex",
+	alignItems: "center",
+	gap: "10px",
+	overflowX: "scroll",
+	overflowY: "hidden",
+	"::-webkit-scrollbar": {
+		height: "10px"
+	},
+	"::-webkit-scrollbar-track": {
+		background: "#f1f1f1"
+	},
+
+	"::-webkit-scrollbar-thumb": {
+		background: "#888"
 	}
 });
 
-const Buttons = styled(Box)({
-	display: "flex",
-	justifyContent: "space-around"
-});
-
-const BackdropDesktop = styled(Box)<Props>(({ backdropUrl }) => ({
-	width: "100%",
-	height: "100%",
-	position: "absolute",
-	zIndex: -1,
-
-	background: `url(${backdropUrl})`,
-	backgroundSize: "cover",
-	opacity: "0.6"
-}));
-
 export {
 	ArrowBackButton,
-	BackdropDesktop,
-	Buttons,
-	FavoriteButton,
+	Backdrops,
 	Genres,
 	MovieInfo,
 	Overview,

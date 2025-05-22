@@ -2,16 +2,7 @@ import styled from "@emotion/styled";
 import { Box, ImageList, Typography } from "@mui/material";
 
 const Page = styled(Box)({
-	width: "90%",
-	//margin: "0 auto",
-	display: "flex",
-	flexDirection: "column",
-	alignItems: "center",
-	paddingBottom: "15px",
-	position: "relative",
-	"@media (max-width: 600px)": {
-		width: "100%"
-	}
+	display: "flex"
 });
 
 const TrendingMovies = styled(ImageList)({
@@ -26,6 +17,7 @@ const PageTitle = styled(Typography)({
 	fontSize: "24px",
 	width: "80%",
 	textAlign: "left",
+	marginBottom: "20px",
 	"@media (max-width: 600px)": {
 		fontSize: "18px"
 	}

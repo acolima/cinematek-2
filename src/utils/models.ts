@@ -26,6 +26,25 @@ export interface TMDBSearchResult {
 	vote_average: number;
 }
 
+export interface TMDBImagesResult {
+	id: number;
+	backdrops: {
+		file_path: string;
+	}[];
+}
+
+export interface TMDBCreditsRescult {
+	id: number;
+	cast: {
+		id: number;
+		name: string;
+		profile_path: string;
+		cast_id: number;
+		character: string;
+		order: 0;
+	}[];
+}
+
 export interface IProviders {
 	logo_path: string;
 	provider_id: string;

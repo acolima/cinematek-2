@@ -23,9 +23,21 @@ function getMovieProviders(movieId: number) {
 	);
 }
 
+function getMovieImages(movieId: number) {
+	return axios.get(`${TMDB_URL}/movie/${movieId}/images?api_key=${API_KEY}
+`);
+}
+
+function getMovieCredits(movieId: number) {
+	return axios.get(`${TMDB_URL}/movie/${movieId}/credits?api_key=${API_KEY}
+`);
+}
+
 export const tmdbApi = {
 	findMoviesByName,
 	getMovie,
+	getMovieCredits,
+	getMovieImages,
 	getMovieProviders,
 	getTrendingMovies
 };

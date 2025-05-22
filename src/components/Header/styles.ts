@@ -23,10 +23,12 @@ const Button = styled(IconButton)({
 });
 
 const PageTitle = styled(Typography)({
+	width: "100%",
 	fontFamily: "Koulen",
 	fontWeight: "700",
 	fontSize: "60px",
 	color: "#790918",
+	textAlign: "center",
 	"@media (max-width: 600px)": {
 		fontSize: "40px"
 	}
