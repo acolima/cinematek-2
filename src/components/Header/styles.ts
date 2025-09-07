@@ -1,49 +1,38 @@
-import styled from "@emotion/styled";
-import { Box, IconButton, OutlinedInput, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
-const Container = styled(Box)({
+export const Container = styled(Box)({
 	boxSizing: "border-box",
 	display: "flex",
 	alignItems: "center",
-	justifyContent: "space-between",
+	justifyContent: "center",
 	position: "fixed",
 	zIndex: 1,
 	padding: 0,
-	background: "#0c174b",
-	width: "90%",
-	height: "70px",
-	"@media (max-width: 600px)": {
-		width: "100%"
+	background: "#839AA7",
+	width: "100%",
+	height: "70px"
+});
+
+export const Menu = styled("div")({
+	backgroundColor: "#020F1D",
+	padding: "10px 20px",
+	borderRadius: "50px",
+	display: "flex",
+	alignItems: "center",
+	gap: "50px",
+	fontSize: ".875rem",
+
+	span: {
+		cursor: "pointer"
 	}
 });
 
-const Button = styled(IconButton)({
-	cursor: "pointer",
-	color: "#fff"
-});
-
-const PageTitle = styled(Typography)({
-	width: "100%",
+export const PageTitle = styled(Typography)({
 	fontFamily: "Koulen",
 	fontWeight: "700",
-	fontSize: "60px",
-	color: "#790918",
+	fontSize: "30px",
+	color: "#020F1D",
 	textAlign: "center",
-	"@media (max-width: 600px)": {
-		fontSize: "40px"
-	}
+	position: "absolute",
+	left: 20
 });
-
-const SearchInput = styled(OutlinedInput)({
-	width: "70%",
-	height: "40px",
-	fontFamily: "Poppins",
-	fontWeight: "500",
-	fontSize: "14px",
-	lineHeight: "24px",
-	color: "rgba(0, 0, 0, 1)",
-	background: "#C4C4C4",
-	borderRadius: "20px"
-});
-
-export { Button, Container, PageTitle, SearchInput };
