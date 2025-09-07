@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Header } from "../../components";
+import { Header, Loader } from "../../components";
 
 import { tmdbApi } from "../../services";
 import { TMDBGenres, TMDBMovieResult } from "../../utils/models";
@@ -14,6 +14,7 @@ function MainPage() {
 	const [movies, setMovies] = useState<TMDBMovieResult[] | []>([]);
 	const [genres, setGenres] = useState<TMDBGenres[]>([]);
 	const [selectedGenre, setSelectedGenre] = useState("Trending");
+	const [loading, setLoading] = useState(false);
 
 	let navigate = useNavigate();
 
@@ -23,22 +24,41 @@ function MainPage() {
 	}, []);
 
 	async function getTrendingMovies() {
+		setLoading(true);
+
 		try {
 			const { data } = await tmdbApi.getTrendingMovies();
 			setMovies(data.results);
 		} catch (error: any) {
 			console.log("External API error");
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	async function getGenres() {
+		setLoading(true);
+
 		try {
 			const { data } = await tmdbApi.getMoviesGenres();
-			console.log(data);
-
 			setGenres(data.genres);
 		} catch (error: any) {
 			console.log("External API error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function getMoviesByGenre(genreId: number) {
+		setLoading(true);
+
+		try {
+			const { data } = await tmdbApi.getMovieByGenre(genreId);
+			setMovies(data.results);
+		} catch (error: any) {
+			console.log("External API error");
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -70,6 +90,11 @@ function MainPage() {
 		carouselRef.current.scrollLeft = scrollLeft - walk;
 	}
 
+	function handleSearchByGenre(genre: TMDBGenres) {
+		setSelectedGenre(genre.name);
+		getMoviesByGenre(genre.id);
+	}
+
 	return (
 		<Page>
 			<Header />
@@ -91,11 +116,15 @@ function MainPage() {
 					<GenreChip
 						key={genre.id}
 						genre={genre}
-						onClick={() => {}}
+						onClick={() => {
+							handleSearchByGenre(genre);
+						}}
 						selected={selectedGenre === genre.name}
 					/>
 				))}
 			</GenresFilter>
+
+			{loading && <Loader />}
 
 			{movies && (
 				<TrendingMovies>

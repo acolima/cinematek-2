@@ -20,6 +20,13 @@ function getMovie(movieId: number) {
 	return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${API_KEY}`);
 }
 
+function getMovieByGenre(genreId: number) {
+	return axios.get(
+		`${TMDB_URL}/discover/movie?with_genres=${genreId}&language=pt-br&include_adult=false`,
+		config()
+	);
+}
+
 function findMoviesByName(name: string, page: number) {
 	return axios.get(
 		`${TMDB_URL}/search/movie?api_key=${API_KEY}&query=${name}&include_adult=false&page=${page}`
@@ -52,6 +59,7 @@ async function getMoviesGenres() {
 export const tmdbApi = {
 	findMoviesByName,
 	getMovie,
+	getMovieByGenre,
 	getMovieCredits,
 	getMovieImages,
 	getMoviesGenres,
