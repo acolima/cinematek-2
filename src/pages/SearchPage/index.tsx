@@ -49,12 +49,7 @@ function Search() {
 
 	return (
 		<Page>
-			<Header
-				page="search"
-				movieName={movieName}
-				setMovieName={setMovieName}
-				handleSearch={handleSearch}
-			/>
+			<Header />
 
 			{loading ? (
 				<Loader />
