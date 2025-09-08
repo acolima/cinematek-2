@@ -35,16 +35,18 @@ export interface TMDBImagesResult {
 	}[];
 }
 
-export interface TMDBCreditsRescult {
+export interface TMDBCreditsResult {
 	id: number;
-	cast: {
-		id: number;
-		name: string;
-		profile_path: string;
-		cast_id: number;
-		character: string;
-		order: 0;
-	}[];
+	cast: TMDBCredit[];
+}
+
+export interface TMDBCredit {
+	id: number;
+	name: string;
+	profile_path: string;
+	cast_id: number;
+	character: string;
+	order: number;
 }
 
 export interface IProviders {

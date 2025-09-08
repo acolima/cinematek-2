@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Header, Loader } from "../../components";
 
@@ -9,14 +8,20 @@ import { GenresFilter, Movie, MovieInfo, Page, TrendingMovies } from "./styles";
 import { GenreChip } from "../../components/GenreChip";
 import dayjs from "dayjs";
 import StarIcon from "@mui/icons-material/Star";
+import MovieModal from "../../components/Movie";
 
 function MainPage() {
 	const [movies, setMovies] = useState<TMDBMovieResult[] | []>([]);
 	const [genres, setGenres] = useState<TMDBGenres[]>([]);
 	const [selectedGenre, setSelectedGenre] = useState("Trending");
+	const [selectedMovie, setSelectedMovie] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [openMovieModal, setOpenMovieModal] = useState(false);
 
-	let navigate = useNavigate();
+	const carouselRef = useRef<HTMLDivElement>(null);
+	const [isDragging, setIsDragging] = useState(false);
+	const [startX, setStartX] = useState(0);
+	const [scrollLeft, setScrollLeft] = useState(0);
 
 	useEffect(() => {
 		getTrendingMovies();
@@ -62,11 +67,6 @@ function MainPage() {
 		}
 	}
 
-	const carouselRef = useRef<HTMLDivElement>(null);
-	const [isDragging, setIsDragging] = useState(false);
-	const [startX, setStartX] = useState(0);
-	const [scrollLeft, setScrollLeft] = useState(0);
-
 	function handleMouseLeave() {
 		setIsDragging(false);
 	}
@@ -95,8 +95,21 @@ function MainPage() {
 		getMoviesByGenre(genre.id);
 	}
 
+	function handleOpenModal(movieId: number) {
+		setOpenMovieModal(true);
+		setSelectedMovie(movieId);
+	}
+
+	function handleCloseModal() {
+		setOpenMovieModal(false);
+	}
+
 	return (
 		<Page>
+			{openMovieModal && (
+				<MovieModal movieId={selectedMovie} onClose={handleCloseModal} />
+			)}
+
 			<Header />
 
 			<GenresFilter
@@ -129,7 +142,7 @@ function MainPage() {
 			{movies && (
 				<TrendingMovies>
 					{movies?.map((movie) => (
-						<Movie>
+						<Movie key={movie.id} onClick={() => handleOpenModal(movie.id)}>
 							<img
 								src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
 								alt={movie.title}

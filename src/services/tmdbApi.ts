@@ -17,7 +17,7 @@ function getTrendingMovies() {
 }
 
 function getMovie(movieId: number) {
-	return axios.get(`${TMDB_URL}/movie/${movieId}?api_key=${API_KEY}`);
+	return axios.get(`${TMDB_URL}/movie/${movieId}`, config());
 }
 
 function getMovieByGenre(genreId: number) {
@@ -34,19 +34,15 @@ function findMoviesByName(name: string, page: number) {
 }
 
 function getMovieProviders(movieId: number) {
-	return axios.get(
-		`${TMDB_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
-	);
+	return axios.get(`${TMDB_URL}/movie/${movieId}/watch/providers`, config());
 }
 
 function getMovieImages(movieId: number) {
-	return axios.get(`${TMDB_URL}/movie/${movieId}/images?api_key=${API_KEY}
-`);
+	return axios.get(`${TMDB_URL}/movie/${movieId}/images`, config());
 }
 
 function getMovieCredits(movieId: number) {
-	return axios.get(`${TMDB_URL}/movie/${movieId}/credits?api_key=${API_KEY}
-`);
+	return axios.get(`${TMDB_URL}/movie/${movieId}/credits`, config());
 }
 
 async function getMoviesGenres() {
